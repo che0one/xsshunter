@@ -21,8 +21,8 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-    ports:
-      - 127.0.0.1:8080:8080
+    expose:
+      - 8080
     volumes:
       - ./payload-fire-images:/app/payload-fire-images
       - ~/.config/gcloud/application_default_credentials.json:/gcloud.json
@@ -34,18 +34,5 @@ services:
       dockerfile: Dockerfile.trufflehog
     container_name: xsshunterexpress-trufflehog
     restart: unless-stopped
-    ports:
-      - 127.0.0.1:8000:8000
-  xsshunterexpress-proxy:
-    image: caddy:alpine
-    container_name: xsshunterexpress-proxy
-    restart: unless-stopped
-    env_file:
-      - .env
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - ./caddy/data:/data
-      - ./caddy/config:/config
-      - ./Caddyfile:/etc/caddy/Caddyfile
+    expose:
+      - 8000
